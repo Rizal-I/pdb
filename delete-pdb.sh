@@ -13,3 +13,5 @@ for PDB_NAME in "${PDB_NAMES[@]}"; do
   kubectl delete pdb -n $NAMESPACE $PDB
   echo "PodDisruptionBudget $PDB deleted in namespace $NAMESPACE"
 done
+rm pdb_names.txt
+echo "pdb_names.txt" deleted.
