@@ -28,7 +28,7 @@ for NAMESPACE in $NAMESPACE_LIST; do
 
         # Create a PDB for the deployment with a custom label selector
         cat <<EOF | kubectl apply -n $NAMESPACE -f -
-apiVersion: policy/v1beta1
+apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
   name: $PDB_NAME
@@ -36,7 +36,7 @@ metadata:
 spec:
   selector:
     matchLabels: $LABELS
-  minAvailable: 2
+  minAvailable: 1
 EOF
         echo "$NAMESPACE/$PDB_NAME" >> pdb_names.txt
         echo "PodDisruptionBudget $PDB_NAME created"
