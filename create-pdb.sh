@@ -17,8 +17,8 @@ for NAMESPACE in $NAMESPACE_LIST; do
     REPLICAS=$(kubectl get deployment -n $NAMESPACE $DEPLOYMENT_NAME -o=jsonpath='{.spec.replicas}')
 
     # Check if the number of replicas is greater than 1
-    if [[ $REPLICAS -gt 1 ]]; then
-      echo "Namespace: $NAMESPACE, Deployment: $DEPLOYMENT_NAME has more than 1 replica"
+    if [[ $REPLICAS -gt 2 ]]; then
+      echo "Namespace: $NAMESPACE, Deployment: $DEPLOYMENT_NAME has more than 2 replica"
 
       # Check if a PDB already exists for the deployment
       PDB_NAME="${DEPLOYMENT_NAME}-pdb"
@@ -36,7 +36,7 @@ metadata:
 spec:
   selector:
     matchLabels: $LABELS
-  minAvailable: 1
+  maxUnavailable: 1
 EOF
         echo "$NAMESPACE/$PDB_NAME" >> pdb_names.txt
         echo "PodDisruptionBudget $PDB_NAME created"
