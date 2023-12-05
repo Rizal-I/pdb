@@ -5,8 +5,7 @@ for namespace in $namespaces; do
         pdb_name=$(echo "$pdb_info" | jq -r '.name')
         pdb_namespace=$(echo "$pdb_info" | jq -r '.namespace')
         # convert to minAvailable
-        kubectl patch poddisruptionbudget $pdb_name -n $pdb_namespace --type='merge' -p '{"spec": {"minAvailable": 1, "maxUnavailable": null}}'
-        kubectl apply -f pdb-dumped/$pdb_name-$pdb_namespace.yaml
+        kubectl patch poddisruptionbudget $pdb_name -n $pdb_namespace --type='merge' -p '{"spec": {"minAvailable": 2, "maxUnavailable": null}}'
         echo "pdb $pdb_name in namespace $pdb_namespace rolled back" 
     fi
 done
