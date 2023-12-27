@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Array to store PDB names
-PDB_NAMES=()
-
 # Get a list of all namespaces
 NAMESPACE_LIST=$(kubectl get namespaces -o jsonpath='{.items[*].metadata.name}')
 
@@ -32,7 +29,7 @@ apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
   labels:
-      generated: "true"
+      generated: "fisclouds"
   name: $PDB_NAME
   namespace: $NAMESPACE
 spec:
@@ -40,7 +37,6 @@ spec:
     matchLabels: $LABELS
   maxUnavailable: 1
 EOF
-        echo "$NAMESPACE/$PDB_NAME" >> pdb_names.txt
         echo "PodDisruptionBudget $PDB_NAME created"
       else
         echo "PodDisruptionBudget $PDB_NAME already exists"
